@@ -11,7 +11,7 @@ function IconThreeDot(props: Props) {
   const middleRef = React.useRef<SVGCircleElement>(null);
   const lastRef = React.useRef<SVGCircleElement>(null);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (open) {
       gsap.to(firstRef.current, {
         duration: 0.2,
@@ -42,13 +42,13 @@ function IconThreeDot(props: Props) {
       });
       gsap.to([firstRef.current, middleRef.current, lastRef.current], {
         duration: 0.2,
-        fill: '#000',
+        fill: 'white',
       });
     }
   }, [open]);
 
   return (
-    <g>
+    <g fill="white">
       <circle ref={firstRef} cx="3" cy="12" r="3" />
       <circle ref={middleRef} cx="12" cy="12" r="3" />
       <circle ref={lastRef} cx="21" cy="12" r="3" />
