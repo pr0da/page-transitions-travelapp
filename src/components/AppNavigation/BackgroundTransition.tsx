@@ -7,8 +7,6 @@ type Props = Pick<
   'in' | 'children'
 >;
 
-console.log(styles);
-
 function BackgroundTransition(props: Props) {
   return (
     <CSSTransition
