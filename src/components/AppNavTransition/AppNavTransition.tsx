@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
-import profile from '../../assets/profile3.jpg';
 import FollowButton from './FollowButton';
+import { useSelector } from 'react-redux';
+import { getIndexedUser } from '../../slices';
 
 interface Props {}
 
@@ -12,6 +13,7 @@ function AppNavTransition(props: Props) {
   const router = useRouter();
   const isPlaceActive = router.pathname === '/place';
   const isGroupActive = router.pathname === '/group';
+  const selectedUser = useSelector(getIndexedUser);
   return (
     <>
       <div
@@ -32,7 +34,7 @@ function AppNavTransition(props: Props) {
           )}
         ></div>
         <img
-          src={profile}
+          src={selectedUser.img}
           className={cn('w-full transition-all duration-500', {
             rounded: router.pathname === '/',
             'rounded-50': router.pathname === '/group',
@@ -58,7 +60,11 @@ function AppNavTransition(props: Props) {
           }
         )}
       >
-        {isGroupActive ? <span>Honolulu</span> : <span>Ben Allen</span>}
+        {isGroupActive ? (
+          <span>{selectedUser.trips[0]}</span>
+        ) : (
+          <span>{selectedUser.name}</span>
+        )}
       </h2>
     </>
   );

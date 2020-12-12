@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import cn from 'classnames';
 import IconBase from '../IconBase';
 import IconThreeDot from '../IconThreeDot';
 import header1 from '../../assets/header1.jpg';
@@ -9,6 +10,9 @@ import BackgroundTransition from './BackgroundTransition';
 import BackgroundImage from './BackgroundImage';
 import NavigationLink from './NavigationLink';
 import AppNavTransition from '../AppNavTransition';
+import { useSelector } from 'react-redux';
+import { getIndexedUserFirstName } from '../../slices';
+import styles from './AppNavigation.module.css';
 
 interface Props {}
 
@@ -16,9 +20,10 @@ function AppNavigation(props: Props) {
   const {} = props;
   const [menuOpen, setMenuOpen] = React.useState(false);
   const router = useRouter();
+  const firstName = useSelector(getIndexedUserFirstName);
   return (
-    <header className="w-screen h-72 bg-black">
-      <div className="absolute w-screen h-72 overflow-hidden top-0">
+    <header className={cn('w-screen bg-black h-72 relative', styles.header)}>
+      <div className="absolute top-0 w-screen overflow-hidden h-72">
         <BackgroundTransition in={router.pathname === '/'}>
           <BackgroundImage url={header1} />
         </BackgroundTransition>
@@ -29,12 +34,14 @@ function AppNavigation(props: Props) {
           <BackgroundImage url={header3} />
         </BackgroundTransition>
       </div>
-      <div className="w-screen relative z-10 bg-green-900 bg-opacity-25 px-5 lg:px-0">
-        <nav className="max-w-screen-lg mx-auto relative">
-          <ul className="py-3 hidden sm:block">
-            <NavigationLink href="/">Home</NavigationLink>
-            <NavigationLink href="/place">Places</NavigationLink>
-            <NavigationLink href="/group">Group Trips</NavigationLink>
+      <div className="relative z-10 w-screen px-5 bg-green-900 bg-opacity-25 lg:px-0">
+        <nav className="relative max-w-screen-lg mx-auto">
+          <ul className="hidden py-3 sm:block">
+            <NavigationLink href="/">{firstName}'s Home</NavigationLink>
+            <NavigationLink href="/place">{firstName}'s Places</NavigationLink>
+            <NavigationLink href="/group">
+              {firstName}'s Group Trips
+            </NavigationLink>
           </ul>
           <a
             href="#"
